@@ -3,6 +3,7 @@ title: "Step 1 — Sync a contact"
 layout: default
 parent: "Contacts, Lists & Tags"
 nav_order: 1
+has_children: true
 permalink: /contacts-lists-tags/01-sync-contact/
 ---
 
@@ -140,6 +141,10 @@ Sample duplicate error from `POST /contacts`:
 ```
 
 In almost every integration scenario, prefer `/contact/sync`.
+
+> **For high-volume / historical loads, use the bulk import endpoint instead.**
+>
+> `/contact/sync` is fine for real-time, one-at-a-time integration. For batch backfills or large imports, see [Bulk import](./bulk-import) — it accepts up to 250 contacts per request and is asynchronous.
 
 ## Looking up an existing contact
 
