@@ -13,7 +13,7 @@ aux_links:
   "View on GitHub":
     - "https://github.com/actest4test-sys/AC-Docs"
 
-footer_content: "ActiveCampaign integration guides — content authored by Geoff Wallace."
+footer_content: "ActiveCampaign integration guides."
 
 markdown: kramdown
 kramdown:
