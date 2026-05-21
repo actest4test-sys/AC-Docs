@@ -1,0 +1,131 @@
+// ───────── Gradient background ─────────
+// Dark metallic blue at the top → black at the bottom.
+// Anchored to the document so it shifts as the user scrolls down a long page.
+html {
+  background-color: #000;
+}
+
+body {
+  background: linear-gradient(
+    180deg,
+    #1e3a5f 0%,
+    #14274a 30%,
+    #0a1730 60%,
+    #02060f 85%,
+    #000000 100%
+  );
+  background-attachment: scroll;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  min-height: 100vh;
+}
+
+// Let the gradient show through the main content frame.
+.main,
+.main-content-wrap,
+.page-header,
+.main-header {
+  background-color: transparent !important;
+}
+
+// Subtle backdrop on the content card so text stays readable on the gradient.
+.main-content {
+  background-color: rgba(5, 12, 28, 0.55);
+  border-radius: 10px;
+  padding: 1.5rem 1.75rem;
+  border: 1px solid rgba(95, 168, 255, 0.08);
+}
+
+// Sidebar gets a solid dark colour so it doesn't visually jitter on scroll.
+.side-bar {
+  background-color: #0a1730;
+  border-right: 1px solid #1c3a5e;
+}
+
+// ───────── Site header: logo inline with title ─────────
+.site-header {
+  display: flex !important;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 1rem 1rem;
+  border-bottom: 1px solid #1c3a5e;
+}
+
+.site-logo {
+  display: inline-block !important;
+  width: 32px;
+  height: 32px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  flex-shrink: 0;
+  margin: 0 !important;
+}
+
+.site-title {
+  font-size: 1.1rem !important;
+  font-weight: 600;
+  color: #ffffff !important;
+  padding: 0 !important;
+}
+
+// ───────── Code blocks ─────────
+.highlight,
+div.highlighter-rouge,
+figure.highlight {
+  background-color: #0a1936 !important;
+  border: 1px solid #1c3a5e;
+  border-radius: 6px;
+}
+
+code.language-plaintext.highlighter-rouge,
+code:not([class*="language-"]) {
+  background-color: rgba(46, 107, 220, 0.15);
+  color: #9ecbff;
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+}
+
+// ───────── Tables ─────────
+.main-content table {
+  background-color: rgba(10, 23, 48, 0.5);
+  border-color: #1c3a5e;
+}
+.main-content table th {
+  background-color: #0a1936;
+  color: #ffffff;
+}
+
+// ───────── Block quotes (warning callouts) ─────────
+.main-content blockquote {
+  background-color: rgba(46, 107, 220, 0.08);
+  border-left: 4px solid #2e6bdc;
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  color: #d8e1f0;
+}
+
+// ───────── Mobile responsive ─────────
+@media (max-width: 800px) {
+  .main-content {
+    padding: 1rem 1rem;
+    border-radius: 6px;
+  }
+  .site-header {
+    padding: 0.6rem 0.9rem;
+  }
+  .site-logo {
+    width: 28px;
+    height: 28px;
+  }
+  .site-title {
+    font-size: 1rem !important;
+  }
+}
+
+@media (max-width: 500px) {
+  .site-logo {
+    width: 24px;
+    height: 24px;
+  }
+}

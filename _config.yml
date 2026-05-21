@@ -3,9 +3,11 @@ description: ActiveCampaign integration guides for solution engineers and develo
 
 remote_theme: just-the-docs/just-the-docs
 
-color_scheme: light
+color_scheme: ac-dark
 search_enabled: true
 heading_anchors: true
+
+logo: "/assets/images/ac-logo.svg"
 
 aux_links:
   "View on GitHub":
