@@ -8,7 +8,7 @@ permalink: /ecommerce/04-abandoned-cart/
 
 # Step 4 — Create an abandoned cart
 
-An abandoned cart uses the **same endpoint** as an order (`/ecomOrders`) — what makes it a cart rather than a completed order is the presence of two fields: `externalcheckoutid` and `abandonedDate`. Reference: [E-Commerce Abandoned Carts](https://developers.activecampaign.com/reference/abandoned-cart).
+An abandoned cart uses the **same endpoint** as an order (`/ecomOrders`) — what makes it a cart rather than a completed order is the presence of two fields: `externalcheckoutid` and `abandonedDate`. Reference: [E-Commerce Abandoned Carts](https://developers.activecampaign.com/reference/e-commerce-abandoned-carts).
 
 ```
 POST /api/3/ecomOrders

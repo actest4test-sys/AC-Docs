@@ -62,7 +62,7 @@ GET /api/3/customObjects/records/{schemaId}?limit=100&offset=100
 
 ## Get a single record by ID
 
-The most reliable approach is to filter the list response on `id` or `externalId`. A direct `GET /customObjects/records/{schemaId}/{recordId}` exists per the API reference; behaviour and shape can vary by tenant — check the [Custom Objects API reference](https://developers.activecampaign.com/reference/customobjects) for your account.
+The most reliable approach is to filter the list response on `id` or `externalId`. A direct `GET /customObjects/records/{schemaId}/{recordId}` exists per the API reference; behaviour and shape can vary by tenant — check the [Custom Objects API reference](https://developers.activecampaign.com/reference/custom-objects) for your account.
 
 ## Updating and deleting records
 

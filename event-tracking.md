@@ -147,5 +147,7 @@ This is the primary mechanism for behavior-driven retention automations: every n
 ## Reference links
 
 - [Event tracking developer reference (AC docs)](https://developers.activecampaign.com/reference/event-tracking)
-- [Event tracking overview (AC help)](https://help.activecampaign.com/hc/en-us/articles/220117847-Event-Tracking)
-- [Automation trigger: Event is recorded (AC help)](https://help.activecampaign.com/hc/en-us/articles/360024860914-Event-trigger)
+- [Contact Event Tracking API guide (AC docs)](https://developers.activecampaign.com/reference/contact-event-tracking-api-guide)
+- [Track event endpoint (AC docs)](https://developers.activecampaign.com/reference/track-event)
+- [Event Tracking overview (AC help)](https://help.activecampaign.com/hc/en-us/articles/221870128-An-overview-of-Event-Tracking)
+- [Using Event Tracking to trigger automations (AC help)](https://help.activecampaign.com/hc/en-us/articles/224653688-Using-Event-Tracking-to-trigger-automations)

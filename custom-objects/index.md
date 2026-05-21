@@ -42,5 +42,7 @@ Authentication and base URL follow the same pattern as [Ecommerce](../ecommerce/
 
 ## Reference links
 
-- [DeepData — Custom Objects (developer docs)](https://developers.activecampaign.com/reference/customobjects)
-- [Custom Objects in the AC UI (help)](https://help.activecampaign.com/hc/en-us/articles/8730395735052-Custom-objects-overview)
+- [Custom Objects (developer docs)](https://developers.activecampaign.com/reference/custom-objects)
+- [Custom Object schemas (developer docs)](https://developers.activecampaign.com/reference/custom-object-schemas)
+- [Custom Objects explained (developer docs)](https://developers.activecampaign.com/docs/custom-objects-explained)
+- [Custom Objects overview (AC help)](https://help.activecampaign.com/hc/en-us/articles/4408415902738-Custom-objects-overview)

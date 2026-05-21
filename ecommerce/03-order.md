@@ -8,7 +8,7 @@ permalink: /ecommerce/03-order/
 
 # Step 3 — Create an order
 
-Orders are the heart of the ecommerce integration. Creating one will (a) create the AC contact if needed, (b) attach the order to the customer record, and (c) fire any "Makes a purchase" automations. Full reference: [Create an order](https://developers.activecampaign.com/reference/create-an-order).
+Orders are the heart of the ecommerce integration. Creating one will (a) create the AC contact if needed, (b) attach the order to the customer record, and (c) fire any "Makes a purchase" automations. Full reference: [Create an order](https://developers.activecampaign.com/reference/create-order).
 
 ```
 POST /api/3/ecomOrders
