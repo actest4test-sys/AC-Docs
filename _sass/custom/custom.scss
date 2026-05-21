@@ -33,9 +33,8 @@ nav,
   background-color: transparent !important;
 }
 
-// Subtle vertical separation between sidebar and main — no solid panel.
 .side-bar {
-  border-right: 1px solid rgba(95, 168, 255, 0.12);
+  border-right: 0 !important;
 }
 
 // Readability backdrop on the content card only (so prose stays legible
