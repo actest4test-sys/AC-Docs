@@ -1,6 +1,17 @@
 title: AC Docs
-description: ActiveCampaign integration guides
-theme: jekyll-theme-cayman
+description: ActiveCampaign integration guides for solution engineers and developers
+
+remote_theme: just-the-docs/just-the-docs
+
+color_scheme: light
+search_enabled: true
+heading_anchors: true
+
+aux_links:
+  "View on GitHub":
+    - "https://github.com/actest4test-sys/AC-Docs"
+
+footer_content: "ActiveCampaign integration guides — content authored by Geoff Wallace."
 
 markdown: kramdown
 kramdown:
@@ -8,8 +19,6 @@ kramdown:
   input: GFM
 
 plugins:
-  - jekyll-relative-links
-
-relative_links:
-  enabled: true
-  collections: true
+  - jekyll-remote-theme
+  - jekyll-include-cache
+  - jekyll-seo-tag
