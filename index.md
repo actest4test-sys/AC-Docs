@@ -15,4 +15,5 @@ Use the sidebar to navigate by category. Search is in the top-right.
 - **[Ecommerce](./ecommerce/)** — Connection, Customer, Order, Abandoned Cart
 - **[Custom Objects](./custom-objects/)** — Schemas, Records, Querying
 - **[Contacts, Lists & Tags](./contacts-lists-tags/)** — Sync, Subscribe, Tag, Custom Fields
+- **[Event Tracking](./event-tracking/)** — Send named business events, trigger automations
 - *(more coming soon)*
