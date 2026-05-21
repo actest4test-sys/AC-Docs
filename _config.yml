@@ -1,0 +1,15 @@
+title: AC Docs
+description: ActiveCampaign integration guides
+theme: jekyll-theme-cayman
+
+markdown: kramdown
+kramdown:
+  syntax_highlighter: rouge
+  input: GFM
+
+plugins:
+  - jekyll-relative-links
+
+relative_links:
+  enabled: true
+  collections: true
