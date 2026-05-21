@@ -13,4 +13,6 @@ Use the sidebar to navigate by category. Search is in the top-right.
 ## Categories
 
 - **[Ecommerce](./ecommerce/)** — Connection, Customer, Order, Abandoned Cart
+- **[Custom Objects](./custom-objects/)** — Schemas, Records, Querying
+- **[Contacts, Lists & Tags](./contacts-lists-tags/)** — Sync, Subscribe, Tag, Custom Fields
 - *(more coming soon)*
