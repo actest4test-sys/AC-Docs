@@ -9,6 +9,7 @@ heading_anchors: true
 logo: "/assets/images/ac-logo.svg"
 
 search_enabled: true
+search_placeholder: "Search Documentation"
 search:
   placeholder: "Search Documentation"
 
