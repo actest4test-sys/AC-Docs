@@ -1,0 +1,10 @@
+<script>
+  // Ensure search placeholder reads "Search Documentation" regardless of
+  // whether the active just-the-docs version honours site.search.placeholder.
+  document.addEventListener("DOMContentLoaded", function () {
+    var input = document.getElementById("search-input");
+    if (input) {
+      input.setAttribute("placeholder", "Search Documentation");
+    }
+  });
+</script>
