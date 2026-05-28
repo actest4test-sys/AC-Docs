@@ -37,13 +37,14 @@ nav,
   border-right: 0 !important;
 }
 
-// Readability backdrop on the content card only (so prose stays legible
-// over the gradient — the gradient still shows around it).
+// Content area is fully transparent so the body gradient shows through
+// uninterrupted — scrolling past different page sections reveals different
+// bands of the gradient. Tables, code blocks and blockquotes keep their
+// own translucent backdrops (defined below) for readability.
 .main-content {
-  background-color: rgba(5, 12, 28, 0.55);
-  border-radius: 10px;
+  background-color: transparent;
+  border: 0;
   padding: 1.5rem 1.75rem;
-  border: 1px solid rgba(95, 168, 255, 0.08);
 }
 
 // ───────── Site header: ActiveCampaign wordmark ─────────
