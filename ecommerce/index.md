@@ -12,6 +12,10 @@ permalink: /ecommerce/
 
 This category walks through the four core REST API calls needed to push ecommerce data from a custom integration into ActiveCampaign: creating a store connection, attaching a customer, creating an order, and creating an abandoned cart. Use it alongside the official [ActiveCampaign Developer Docs](https://developers.activecampaign.com/reference/overview).
 
+> **⚠ Don't write directly to this API if you're using Shopify, WooCommerce, BigCommerce, or Magento**
+>
+> If a native AC ecommerce integration is already installed for one of these platforms, don't push data through the REST API in parallel — you'll end up with duplicate records and out-of-sync data. The endpoints in this guide are for **custom stores with no native AC connector.**
+
 ---
 
 ## Before you start

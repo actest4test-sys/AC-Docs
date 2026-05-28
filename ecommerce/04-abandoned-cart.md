@@ -20,7 +20,7 @@ POST /api/3/ecomOrders
 {
   "ecomOrder": {
     "externalcheckoutid": "checkout-abc-555",
-    "source": 1,
+    "source": "1",
     "email": "jane@example.com",
     "abandonedDate": "2026-05-21T10:30:00-05:00",
     "orderProducts": [
@@ -67,10 +67,6 @@ PUT /api/3/ecomOrders/{id}
   }
 }
 ```
-
-> **⚠ Don't write directly to this API if you're using Shopify, WooCommerce, BigCommerce, or Magento**
->
-> If a native AC ecommerce integration is already installed for the platform, don't push data through this REST API in parallel — you'll end up with duplicate records and out-of-sync data. The REST endpoints in this guide are for **custom stores with no native AC connector**.
 
 ---
 
