@@ -1,6 +1,6 @@
 <script>
-  // Ensure search placeholder reads "Search Documentation" regardless of
-  // whether the active just-the-docs version honours site.search.placeholder.
+  /* Ensure search placeholder reads "Search Documentation" regardless of
+     whether the active just-the-docs version honours site.search.placeholder. */
   document.addEventListener("DOMContentLoaded", function () {
     var input = document.getElementById("search-input");
     if (input) {
@@ -8,9 +8,12 @@
     }
   });
 
-  // Lift each page's "## Reference links" section into a sticky right-hand
-  // sidebar. The original section is hidden from the main flow so links
-  // aren't duplicated. Pages without a Reference links section render normally.
+  /* Lift each page's "## Reference links" section into a sticky right-hand
+     sidebar. The original section is hidden from the main flow so links
+     aren't duplicated. Pages without a Reference links section render normally.
+     Block-comment style is required because GitHub Pages' HTML minifier
+     strips newlines from inline <script> blocks, which would turn // comments
+     into a single comment that swallows the entire script. */
   document.addEventListener("DOMContentLoaded", function () {
     var heading = document.getElementById("reference-links");
     if (!heading) return;
