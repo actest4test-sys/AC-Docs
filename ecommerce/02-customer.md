@@ -36,7 +36,7 @@ POST /api/3/ecomCustomers
 
 > **⚠ If the customer already exists**
 >
-> Creating a customer with the same `connectionid` + `externalid` combo will return a `422` error. Either `GET` the customer first (filter on `externalid` and `connectionid`), or skip straight to creating the order — AC will auto-create a customer behind the scenes when you provide the same identifiers on the order.
+> Creating a customer with the same `connectionid` + `externalid` combo will return a `422` error. `GET` the customer first (filter on `externalid` and `connectionid`) before attempting to create.
 
 ---
 
