@@ -10,7 +10,7 @@ permalink: /ecommerce/
 
 **Connection → Customer → Order → Abandoned Cart**
 
-This category walks through the four core REST API calls needed to push ecommerce data from a custom integration into ActiveCampaign: creating a store connection, attaching a customer, creating an order, and creating an abandoned cart. Use it alongside the official [ActiveCampaign Developer Docs](https://developers.activecampaign.com/).
+This category walks through the four core REST API calls needed to push ecommerce data from a custom integration into ActiveCampaign: creating a store connection, attaching a customer, creating an order, and creating an abandoned cart. Use it alongside the official [ActiveCampaign Developer Docs](https://developers.activecampaign.com/reference/overview).
 
 ---
 
@@ -46,18 +46,6 @@ Accept: application/json
 2. **[Step 2 — Create a customer](./02-customer)** — links a contact in AC to a customer record in that store.
 3. **[Step 3 — Create an order](./03-order)** — a completed purchase tied to the customer and connection.
 4. **[Step 4 — Create an abandoned cart](./04-abandoned-cart)** — same endpoint as orders, but with cart-specific fields. Update later when (or if) the cart converts.
-
----
-
-## Quick recap
-
-| Step | Endpoint | What makes it unique |
-|---|---|---|
-| Connection | `POST /api/3/connections` | Created once per store. Returns the `connectionid` used everywhere. |
-| Customer | `POST /api/3/ecomCustomers` | Links email → connection. Auto-created if you skip and just send orders. |
-| Order | `POST /api/3/ecomOrders` | Has `externalid`. `source: 1` triggers automations. |
-| Abandoned cart | `POST /api/3/ecomOrders` | Has `externalcheckoutid` + `abandonedDate`, no `externalid`. |
-| Cart → order | `PUT /api/3/ecomOrders/{id}` | Add `externalid` to the cart record to convert it. |
 
 ---
 

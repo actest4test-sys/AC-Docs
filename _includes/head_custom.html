@@ -7,4 +7,37 @@
       input.setAttribute("placeholder", "Search Documentation");
     }
   });
+
+  // Lift each page's "## Reference links" section into a sticky right-hand
+  // sidebar. The original section is hidden from the main flow so links
+  // aren't duplicated. Pages without a Reference links section render normally.
+  document.addEventListener("DOMContentLoaded", function () {
+    var heading = document.getElementById("reference-links");
+    if (!heading) return;
+
+    var list = heading.nextElementSibling;
+    while (list && list.tagName !== "UL") {
+      list = list.nextElementSibling;
+    }
+    if (!list) return;
+
+    var aside = document.createElement("aside");
+    aside.className = "ref-sidebar";
+
+    var label = document.createElement("h3");
+    label.className = "ref-sidebar-title";
+    label.textContent = "Reference";
+    aside.appendChild(label);
+
+    aside.appendChild(list.cloneNode(true));
+    document.body.appendChild(aside);
+    document.body.classList.add("has-ref-sidebar");
+
+    heading.style.display = "none";
+    list.style.display = "none";
+    var prev = heading.previousElementSibling;
+    if (prev && prev.tagName === "HR") {
+      prev.style.display = "none";
+    }
+  });
 </script>
