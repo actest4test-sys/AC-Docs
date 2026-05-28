@@ -129,18 +129,18 @@ code:not([class*="language-"]) {
 // scrolling on wide screens; hidden below 1300px to avoid overlapping content.
 .ref-sidebar {
   position: fixed;
-  top: 5rem;
-  right: 1.25rem;
-  width: 240px;
-  max-height: calc(100vh - 6.5rem);
+  top: 4.5rem;
+  right: 1rem;
+  width: 210px;
+  max-height: calc(100vh - 6rem);
   overflow-y: auto;
-  padding: 1rem 1.1rem 1.1rem;
-  background-color: rgba(10, 23, 48, 0.78);
-  border: 1px solid rgba(95, 168, 255, 0.18);
+  padding: 0.9rem 1rem 1rem;
+  background-color: rgba(10, 23, 48, 0.85);
+  border: 1px solid rgba(95, 168, 255, 0.22);
   border-radius: 8px;
   z-index: 50;
-  font-size: 0.82rem;
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
+  font-size: 0.8rem;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3);
 }
 
 .ref-sidebar-title {
@@ -176,16 +176,16 @@ code:not([class*="language-"]) {
   text-decoration: underline;
 }
 
-// Reserve right-edge space on wide screens so the sidebar never overlaps
-// content. Only applies when JS has injected the .has-ref-sidebar class.
-@media (min-width: 1300px) {
+// Reserve right-edge space on screens wide enough to fit both the left
+// nav and the sidebar without crushing content. Below 1000px we hide the
+// sidebar entirely (small laptops / phones).
+@media (min-width: 1000px) {
   body.has-ref-sidebar .main {
-    padding-right: 280px;
+    padding-right: 235px;
   }
 }
 
-// Hide the sidebar on narrower screens — not enough horizontal room.
-@media (max-width: 1299px) {
+@media (max-width: 999px) {
   .ref-sidebar {
     display: none;
   }
