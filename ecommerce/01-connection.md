@@ -23,7 +23,8 @@ POST /api/3/connections
     "externalid": "store-12345",
     "name": "My Custom Store",
     "logoUrl": "https://example.com/logo.png",
-    "linkUrl": "https://example.com"
+    "linkUrl": "https://example.com",
+    "listid": 1
   }
 }
 ```
@@ -33,7 +34,9 @@ POST /api/3/connections
 - `service` — short identifier for the store/platform (lowercase, no spaces). This is what surfaces in the AC UI integration list.
 - `externalid` — your unique ID for the store. Use this to look up the connection later.
 - `name` — display name shown in AC.
-- `logoUrl` / `linkUrl` — surfaced in the AC UI; optional but recommended.
+- `logoUrl` — image shown on the store/connection card in the AC UI.
+- `linkUrl` — click-through destination for the store/connection card in the AC UI.
+- `listid` — numeric ID of the AC list contacts coming through this connection should be added to.
 
 ## Response
 
