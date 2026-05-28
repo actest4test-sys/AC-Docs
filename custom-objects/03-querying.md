@@ -14,7 +14,7 @@ permalink: /custom-objects/03-querying/
 GET /api/3/customObjects/records/{schemaId}?limit=100
 ```
 
-Returns paginated records for the schema, ordered by creation time. **The schema ID goes in the URL path** — other URL shapes (`/customObjects/records?schemaId=...`, `/customObjects/{schemaId}/records`) return `400 Bad Request`.
+Returns paginated records for the schema. **The schema ID goes in the URL path** — other URL shapes (`/customObjects/records?schemaId=...`, `/customObjects/{schemaId}/records`) return `400 Bad Request`. Default ordering is **not guaranteed** — use `orders[createdTimestamp]` (below) for explicit sorting.
 
 ### Response shape
 
@@ -60,16 +60,60 @@ GET /api/3/customObjects/records/{schemaId}?limit=100&offset=100
 
 `meta.total` in the response tells you when you've reached the end.
 
+## Sort by createdTimestamp
+
+```
+GET /api/3/customObjects/records/{schemaId}?orders[createdTimestamp]=ASC
+GET /api/3/customObjects/records/{schemaId}?orders[createdTimestamp]=DESC
+```
+
+Server-side sort by record creation time. The most useful pattern for "give me everything in chronological order" or "give me the newest N records first".
+
+## Filter by exact createdTimestamp
+
+```
+GET /api/3/customObjects/records/{schemaId}?filters[createdTimestamp]=2026-05-21T11:14:25.386Z
+```
+
+Exact match only — pass the full ISO 8601 timestamp including milliseconds. Returns the matching record(s).
+
+> **⚠ No range / before / after filter for `createdTimestamp`**
+>
+> Variants like `filters[created_before]`, `filters[created_after]`, `filters[createdTimestamp_gt]`, and `filters[createdTimestamp][gt]` all return `total: 0` rather than a date-range result. To do a date-range query, sort with `orders[createdTimestamp]`, paginate, and break the loop in client code when records cross your cutoff.
+
 ## Get a single record by ID
 
-The most reliable approach is to filter the list response on `id` or `externalId`. A direct `GET /customObjects/records/{schemaId}/{recordId}` exists per the API reference; behaviour and shape can vary by tenant — check the [Custom Objects API reference](https://developers.activecampaign.com/reference/custom-objects) for your account.
+```
+GET /api/3/customObjects/records/{schemaId}/{recordId}
+```
 
-## Updating and deleting records
+Returns the full record (including `id`, `createdTimestamp`, `updatedTimestamp`) wrapped under `record`:
 
-- **Update:** `PATCH /api/3/customObjects/records/{schemaId}/{recordId}` with a partial body shaped like Step 2.
-- **Delete:** `DELETE /api/3/customObjects/records/{schemaId}/{recordId}`.
+```json
+{
+  "record": {
+    "id": "c7d03114-338e-439b-9380-91122fa25ddd",
+    "externalId": "donation-12345",
+    "schemaId": "4453571f-4a21-45e9-9872-49ce0f86e611",
+    "fields": [ ... ],
+    "relationships": {"primary-contact": ["242"]},
+    "createdTimestamp": "2026-05-21T11:14:25.386Z",
+    "updatedTimestamp": "2026-05-21T11:14:25.386Z"
+  }
+}
+```
 
-See the API reference linked above for exact body shapes and edge cases.
+## Deleting a record
+
+```
+DELETE /api/3/customObjects/records/{schemaId}/{recordId}
+```
+
+Returns `HTTP 202 Accepted` with an empty body. The record is removed immediately from subsequent list and single-GET responses.
+
+> **⚠ Updating records is not supported via PATCH / PUT**
+>
+> Both `PATCH /api/3/customObjects/records/{schemaId}/{recordId}` and `PUT /api/3/customObjects/records/{schemaId}/{recordId}` return `405 Method Not Allowed`. To "edit" a record, delete and recreate, or update from the AC UI. Check the [Custom Objects API reference](https://developers.activecampaign.com/reference/custom-objects) periodically — the update endpoint may be added later.
 
 > **⚠ Don't trust the list endpoint to confirm a just-created record**
 >

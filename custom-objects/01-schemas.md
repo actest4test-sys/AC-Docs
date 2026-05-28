@@ -73,6 +73,40 @@ schema_id = donation["id"]
 >
 > Most record-level endpoints take the schema **UUID**, not the slug. Look up the UUID once and cache it for the session.
 
+## Creating a schema via API
+
+Schemas are normally set up in the AC UI, but the API does support creation:
+
+```
+POST /api/3/customObjects/schemas
+```
+
+```json
+{
+  "schema": {
+    "slug": "establishment",
+    "labels": {"singular": "Establishment", "plural": "Establishments"},
+    "description": "Hotel, B&B, restaurant or other inspected place",
+    "fields": [
+      {"id": "establishment-name", "labels": {"singular": "Name", "plural": "Names"}, "type": "text", "required": false},
+      {"id": "last-inspection-date", "labels": {"singular": "Last Inspection", "plural": "Last Inspections"}, "type": "datetime", "required": false}
+    ],
+    "relationships": [
+      {
+        "id": "primary-contact",
+        "labels": {"singular": "Contact", "plural": "Contacts"},
+        "namespace": "contacts",
+        "hasMany": false
+      }
+    ]
+  }
+}
+```
+
+> **⚠ Relationships must use `hasMany: false`**
+>
+> AC rejects `hasMany: true` with the error *"Relationship hasMany value should be set to false"*. This means a single custom-object record can only point at one contact through a given relationship. To model many-to-many (e.g. multiple contacts associated with one establishment, each with a different role), use a **junction custom object** — a second schema where each record represents one contact-to-thing link — rather than a multi-link relationship.
+
 ---
 
 Next: [Step 2 — Records](../02-records)

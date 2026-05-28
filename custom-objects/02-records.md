@@ -25,7 +25,7 @@ POST /api/3/customObjects/records/{schemaId}
   "record": {
     "externalId": "donation-12345",
     "fields": [
-      {"id": "amount", "value": 50},
+      {"id": "amount", "value": "50"},
       {"id": "donation-date", "value": "2026-05-21T00:00:00Z"},
       {"id": "campaign-name", "value": "Spring Appeal"},
       {"id": "payment-method", "value": "Credit Card"}
@@ -47,19 +47,16 @@ POST /api/3/customObjects/records/{schemaId}
 
 | Schema `field.type` | Body value |
 |---|---|
-| `text` | string or number — both accepted |
+| `text` | string (numeric values like ratings/amounts also go in as strings, e.g. `"50"`) |
 | `datetime` | ISO 8601 with `Z` or offset (e.g. `2026-05-21T00:00:00Z`) |
-| `number` | number |
-| `boolean` | `true` / `false` |
 
 ### Response
 
-`HTTP 201 Created`. The body echoes the record back with the assigned `id` (a UUID):
+`HTTP 201 Created`. The body echoes the record back — but **note the `id` field is not included**:
 
 ```json
 {
   "record": {
-    "id": "c7d03114-338e-439b-9380-91122fa25ddd",
     "externalId": "donation-12345",
     "schemaId": "4453571f-4a21-45e9-9872-49ce0f86e611",
     "fields": [ ... ],
@@ -67,6 +64,10 @@ POST /api/3/customObjects/records/{schemaId}
   }
 }
 ```
+
+> **⚠ POST does not return the new record's `id`**
+>
+> To get the AC-assigned UUID for a record you just created, either list the records ([Step 3](../03-querying)) and match on your `externalId`, or `GET` the single record by ID once you know it from a subsequent list. Track your own `externalId` carefully — it's the only handle you have on the record immediately after creation.
 
 ## Linking to a contact
 
