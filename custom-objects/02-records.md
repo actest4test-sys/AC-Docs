@@ -10,6 +10,9 @@ permalink: /custom-objects/02-records/
 
 Records are the instances of a schema. Each record sets values for the schema's fields and (typically) links to a contact via the `primary-contact` relationship.
 
+![Custom object records shown in the ActiveCampaign UI]({{ site.baseurl }}/assets/images/custom-object-records.jpg)
+*Custom object records shown in the ActiveCampaign UI.*
+
 ## Create a record
 
 ```

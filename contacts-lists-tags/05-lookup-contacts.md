@@ -47,16 +47,6 @@ Returns a `contacts` array. If the contact exists, `contacts[0]` is your record.
 
 > **Note:** `GET /contacts?email=...` returns `{contacts: [...]}` (plural array), whereas `GET /contacts/{id}` returns `{contact: {...}}` (singular object). Don't mix up the two shapes.
 
-## Look up by email (partial match)
-
-Use `email_like` for a substring search:
-
-```
-GET /api/3/contacts?email_like=@example.com
-```
-
-Useful for finding all contacts at a given domain, for example.
-
 ## Look up by ID
 
 If you already have the contact's numeric ID:
@@ -75,7 +65,6 @@ Common query parameters for `GET /api/3/contacts`:
 | Parameter | Description |
 |---|---|
 | `email` | Exact email match |
-| `email_like` | Substring match on email |
 | `search` | Full-text search across name, email, org |
 | `listid` | Filter by list membership (numeric list ID) |
 | `tagid` | Filter by tag (numeric tag ID) |
@@ -83,24 +72,16 @@ Common query parameters for `GET /api/3/contacts`:
 | `limit` | Max results per page (default 20, max 100) |
 | `offset` | Pagination offset |
 
-The response always includes a `meta` object:
-
-```json
-{
-  "meta": {
-    "total": "847",
-    "page_input": { "limit": 20, "offset": 0 }
-  }
-}
-```
-
 Use `offset` to paginate: `?limit=100&offset=100` for the second page, and so on.
+
+More filters and query parameters are available — see the [official reference](https://developers.activecampaign.com/reference/list-all-contacts).
 
 ## Pitfalls
 
 - **`meta.total` is a string, not a number.** Compare with `=== "0"` or parse it — `meta.total === 0` will never be true.
 - **`scoreValues` in the response is normal.** It's a sibling collection, not part of the contact object.
 - **`GET /contacts/{id}` is heavier than it looks.** It returns the contact plus all related collections. For bulk lookups, use the list endpoint with filters instead.
+- **You cannot filter contacts by custom field values via this endpoint.** The `GET /api/3/contacts` endpoint does not support filtering on `fieldValues`. If you need to find contacts by a custom field value, export contacts and filter client-side, or use segmentation/automations within the AC UI.
 
 ---
 
