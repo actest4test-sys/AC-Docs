@@ -149,8 +149,6 @@ See the [official reference](https://developers.activecampaign.com/reference/bul
 - **camelCase vs snake_case.** `/contact/sync` uses `firstName`; `/import/bulk_import` uses `first_name`. Mixing them silently drops the values (no validation error — the field is just unknown).
 - **One bad contact rejects the entire batch.** Pre-validate emails client-side before sending. (See the callout in [Validation error](#validation-error--http-400) above.)
 - **Tag names auto-create tags.** A typo in `"Premium"` vs `"premuim"` creates a new permanent tag in the account. Hard to clean up later — normalize tag names before sending.
-- **`fields[].id` is numeric.** Same gotcha as `/contact/sync` and `POST /fieldValues` — `perstag` doesn't work here.
-- **No idempotency by external ID.** Unlike ecommerce records, bulk_import has no `externalid` field. Dedup is by email only — re-importing the same email updates the existing contact.
 - **Automations fire by default.** If you're loading historical data, set `exclude_automations: true` so contacts don't get re-enrolled in welcome/onboarding flows.
 - **Don't immediately re-query after `success: 1`.** The batch is queued, not done. Allow at least 5–10 seconds before checking status. Premature verification leads to thinking the import failed and double-importing.
 
