@@ -108,10 +108,6 @@ POST /api/3/customObjects/schemas
 }
 ```
 
-> **⚠ Relationships must use `hasMany: false`**
->
-> AC rejects `hasMany: true` with the error *"Relationship hasMany value should be set to false"*. This means a single custom-object record can only point at one contact through a given relationship. To model many-to-many (e.g. multiple contacts associated with one establishment, each with a different role), use a **junction custom object** — a second schema where each record represents one contact-to-thing link — rather than a multi-link relationship.
-
 ---
 
 Next: [Step 2 — Records](../02-records)
