@@ -13,12 +13,14 @@ A schema defines the shape of a custom object — its name, its fields, and what
 ## List all schemas
 
 ```
-GET /api/3/customObjects/schemas?limit=100
+GET /api/3/customObjects/schemas
 ```
 
 Returns every schema in the account: slug, ID, singular/plural labels, fields, relationships.
 
 ### Example response (trimmed)
+
+Check the full example response [here](https://developers.activecampaign.com/reference/list-all-schemas).
 
 ```json
 {
@@ -26,45 +28,62 @@ Returns every schema in the account: slug, ID, singular/plural labels, fields, r
     {
       "id": "4453571f-4a21-45e9-9872-49ce0f86e611",
       "slug": "np-donation",
+      "visibility": "private",
+      "customized": false,
       "labels": {"singular": "Donation", "plural": "Donations"},
+      "description": "Donor records linked to contact",
+      "createdTimestamp": "2026-05-05T13:00:24.898989309Z",
+      "updatedTimestamp": "2026-05-05T13:00:24.898989309Z",
       "fields": [
-        {"id": "amount", "type": "text"},
-        {"id": "donation-date", "type": "datetime"},
-        {"id": "campaign-name", "type": "text"}
+        {
+          "id": "amount",
+          "labels": {"singular": "Amount", "plural": "Amounts"},
+          "type": "text",
+          "required": false,
+          "inherited": false
+        },
+        {
+          "id": "donation-date",
+          "labels": {"singular": "Donation Date", "plural": "Donation Dates"},
+          "type": "datetime",
+          "required": false,
+          "inherited": false
+        }
       ],
+      "icons": {
+        "default": "https://d226aj4ao1t61q.cloudfront.net/n9mayqo2d_customobject.png"
+      },
       "relationships": [
         {
           "id": "primary-contact",
+          "labels": {"singular": "Contact", "plural": "Contacts"},
+          "description": "Primary contact linked to this record",
           "namespace": "contacts",
-          "hasMany": false
+          "hasMany": false,
+          "inherited": false
         }
       ]
     }
-  ]
+  ],
+  "meta": {
+    "total": 58,
+    "count": 20,
+    "limit": 20,
+    "offset": 0
+  }
 }
 ```
 
-## Get a single schema with full field details
+## Get a single schema
 
-```
-GET /api/3/customObjects/schemas/{schemaId}?showFields=all
-```
-
-The `showFields=all` query parameter returns inherited fields and any marked-for-deletion fields. Without it the response only includes active first-class fields.
-
-### Use the response to discover
-
-- **`fields[].id`** — the field identifiers you'll use in record bodies.
-- **`fields[].type`** — `text`, `datetime`, `number`, `boolean`, etc.
-- **`relationships[].id`** — almost always `primary-contact` for contact-linked objects.
-- **`labels.singular`** / **`slug`** — useful for finding a schema by name in code.
+You can find the call to get a single schema (GET `/api/3/customObjects/schemas/{id}`) [here](https://developers.activecampaign.com/reference/retrieve-a-schema).
 
 ## Looking up by slug or label
 
-The list endpoint returns all schemas in one page (typically <100 per account). The pragmatic pattern is to fetch the list once on startup and match locally:
+The list endpoint is paginated (default page size: 20). The pragmatic pattern is to fetch until you find the schema you need, or match locally after fetching all pages:
 
 ```python
-schemas = client.get("/customObjects/schemas?limit=100")["schemas"]
+schemas = client.get("/customObjects/schemas")["schemas"]
 donation = next(s for s in schemas if s["labels"]["singular"] == "Donation")
 schema_id = donation["id"]
 ```
