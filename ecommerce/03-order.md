@@ -11,7 +11,7 @@ permalink: /ecommerce/03-order/
 Orders are the heart of the ecommerce integration. Creating one attaches the order to the customer record and fires any "Makes a purchase" automations. Full reference: [Create an order](https://developers.activecampaign.com/reference/create-order).
 
 ```
-POST /api/3/ecomOrders
+POST https://{youraccountname}.api-us1.com/api/3/ecomOrders
 ```
 
 ## Request body

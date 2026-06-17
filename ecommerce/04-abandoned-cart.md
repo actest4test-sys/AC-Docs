@@ -11,7 +11,7 @@ permalink: /ecommerce/04-abandoned-cart/
 An abandoned cart uses the **same endpoint** as an order (`/ecomOrders`) — what makes it a cart rather than a completed order is the presence of two fields: `externalcheckoutid` and `abandonedDate`. Reference: [E-Commerce Abandoned Carts](https://developers.activecampaign.com/reference/e-commerce-abandoned-carts).
 
 ```
-POST /api/3/ecomOrders
+POST https://{youraccountname}.api-us1.com/api/3/ecomOrders
 ```
 
 ## Request body
@@ -53,10 +53,10 @@ POST /api/3/ecomOrders
 
 ## Converting a cart into an order
 
-When the customer comes back and completes the purchase, **update** (don't create a new) record by `PUT`ting to `/api/3/ecomOrders/{id}` and adding the `externalid` field. AC transitions the record from cart → order, removes the contact from the "Abandons cart" trigger, and fires "Makes a purchase" instead.
+When the customer comes back and completes the purchase, **update** (don't create a new) record by `PUT`ting to `https://{youraccountname}.api-us1.com/api/3/ecomOrders/{id}` and adding the `externalid` field. AC transitions the record from cart → order, removes the contact from the "Abandons cart" trigger, and fires "Makes a purchase" instead.
 
 ```
-PUT /api/3/ecomOrders/{id}
+PUT https://{youraccountname}.api-us1.com/api/3/ecomOrders/{id}
 ```
 
 ```json

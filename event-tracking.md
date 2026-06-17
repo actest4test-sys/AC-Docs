@@ -45,8 +45,6 @@ Event names should be registered before they're used. You can do this in the UI 
 
 ```
 POST https://{youraccountname}.api-us1.com/api/3/eventTrackingEvents
-Api-Token: {yourapikey}
-Content-Type: application/json
 ```
 
 ```json

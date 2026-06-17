@@ -16,8 +16,6 @@ If the tag already exists, skip to [Step 3b](#step-3b--apply-tag-to-contact) and
 
 ```
 POST https://{youraccountname}.api-us1.com/api/3/tags
-Api-Token: {yourapikey}
-Content-Type: application/json
 ```
 
 ```json
@@ -68,8 +66,6 @@ To search for an existing tag by name, use `GET /api/3/tags?search={name}` — t
 
 ```
 POST https://{youraccountname}.api-us1.com/api/3/contactTags
-Api-Token: {yourapikey}
-Content-Type: application/json
 ```
 
 ```json

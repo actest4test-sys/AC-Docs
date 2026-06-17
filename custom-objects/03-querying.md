@@ -46,7 +46,7 @@ Returns paginated records for the schema. Default ordering is **not guaranteed**
 ## Filter by exact createdTimestamp
 
 ```
-GET /api/3/customObjects/records/{schemaId}?filters[createdTimestamp]=2026-05-21T11:14:25.386Z
+GET https://{youraccountname}.api-us1.com/api/3/customObjects/records/{schemaId}?filters[createdTimestamp]=2026-05-21T11:14:25.386Z
 ```
 
 Exact match only — pass the full ISO 8601 timestamp including milliseconds. Returns the matching record(s).
@@ -58,7 +58,7 @@ Exact match only — pass the full ISO 8601 timestamp including milliseconds. Re
 ## Get a single record by ID
 
 ```
-GET /api/3/customObjects/records/{schemaId}/{recordId}
+GET https://{youraccountname}.api-us1.com/api/3/customObjects/records/{schemaId}/{recordId}
 ```
 
 Returns the full record (including `id`, `createdTimestamp`, `updatedTimestamp`) wrapped under `record`:
@@ -86,7 +86,7 @@ Returns the full record (including `id`, `createdTimestamp`, `updatedTimestamp`)
 ## Deleting a record
 
 ```
-DELETE /api/3/customObjects/records/{schemaId}/{recordId}
+DELETE https://{youraccountname}.api-us1.com/api/3/customObjects/records/{schemaId}/{recordId}
 ```
 
 Returns `HTTP 202 Accepted` with an empty body. The record is removed immediately from subsequent list and single-GET responses.

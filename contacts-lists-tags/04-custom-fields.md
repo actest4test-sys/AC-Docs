@@ -14,8 +14,6 @@ Custom fields are defined at the account level. Write values for a specific cont
 
 ```
 POST https://{youraccountname}.api-us1.com/api/3/fieldValues
-Api-Token: {yourapikey}
-Content-Type: application/json
 ```
 
 ```json

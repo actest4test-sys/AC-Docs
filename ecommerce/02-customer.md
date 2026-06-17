@@ -11,7 +11,7 @@ permalink: /ecommerce/02-customer/
 A customer record links an AC contact (by email) to a connection. Orders attach to customers, and the customer aggregate (lifetime revenue, order count, etc.) is calculated from this object. Full reference: [Create a customer](https://developers.activecampaign.com/reference/create-customer).
 
 ```
-POST /api/3/ecomCustomers
+POST https://{youraccountname}.api-us1.com/api/3/ecomCustomers
 ```
 
 ## Request body

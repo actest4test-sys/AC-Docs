@@ -18,32 +18,6 @@ This category walks through the four core REST API calls needed to push ecommerc
 
 ---
 
-## Before you start
-
-### Authentication
-
-All requests authenticate via an API key sent in the `Api-Token` header. You can find your key under **Settings → Developer** in the AC UI. Full details: [Authentication](https://developers.activecampaign.com/reference/authentication).
-
-### Base URL
-
-Every endpoint sits under your account-specific base URL:
-
-```
-https://{youraccountname}.api-us1.com/api/3/
-```
-
-Replace `{youraccountname}` with the subdomain in the AC URL bar. Reference: [Base URL](https://developers.activecampaign.com/reference/url).
-
-### Standard headers
-
-```
-Api-Token: YOUR_API_KEY
-Content-Type: application/json
-Accept: application/json
-```
-
----
-
 ## The flow at a glance
 
 1. **[Step 1 — Create a connection](./01-connection)** — represents the external ecommerce store.

@@ -11,15 +11,13 @@ permalink: /contacts-lists-tags/02-subscribe-list/
 Adds an existing contact to an existing list with a given subscription status.
 
 ```
-POST /api/3/contactLists
+POST https://{youraccountname}.api-us1.com/api/3/contactLists
 ```
 
 ## Request body
 
 ```bash
 curl -X POST \
-  -H "Api-Token: {yourapikey}" \
-  -H "Content-Type: application/json" \
   "https://{youraccountname}.api-us1.com/api/3/contactLists" \
   -d '{
     "contactList": {

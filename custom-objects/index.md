@@ -16,10 +16,6 @@ This category covers the three core API tasks: discovering schemas, creating rec
 
 ---
 
-## Before you start
-
-Authentication and base URL follow the same pattern as [Ecommerce](../ecommerce/) — `Api-Token` header against `https://{youraccountname}.api-us1.com/api/3/`.
-
 ## Concepts
 
 | Term | What it is |

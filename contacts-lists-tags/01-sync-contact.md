@@ -14,7 +14,7 @@ permalink: /contacts-lists-tags/01-sync-contact/
 Create-or-update a contact by email in a single call. **This is the endpoint you almost always want** when an integration receives data from an external system — it's idempotent and safe to re-run.
 
 ```
-POST /api/3/contact/sync
+POST https://{youraccountname}.api-us1.com/api/3/contact/sync
 ```
 
 ## Request body
@@ -23,8 +23,6 @@ The minimum payload is just an email — every other field is optional and only 
 
 ```bash
 curl -X POST \
-  -H "Api-Token: {yourapikey}" \
-  -H "Content-Type: application/json" \
   "https://{youraccountname}.api-us1.com/api/3/contact/sync" \
   -d '{
     "contact": {

@@ -15,10 +15,6 @@ The four most common contact-shaping operations from a custom integration.
 
 ---
 
-## Before you start
-
-Authentication and base URL follow the same pattern as [Ecommerce](../ecommerce/) — `Api-Token` header against `https://{youraccountname}.api-us1.com/api/3/`.
-
 ## The flow at a glance
 
 1. **Step 1 — [Sync contacts individually](./01-sync-contact) or [Import in Bulk](./01-sync-contact/bulk-import)**

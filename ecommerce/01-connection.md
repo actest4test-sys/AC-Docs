@@ -11,7 +11,7 @@ permalink: /ecommerce/01-connection/
 A connection is the AC-side representation of an external ecommerce store. Every customer and order must reference a `connectionid`. You usually create this once per store. Full reference: [Create a connection](https://developers.activecampaign.com/reference/create-connection).
 
 ```
-POST /api/3/connections
+POST https://{youraccountname}.api-us1.com/api/3/connections
 ```
 
 ## Request body

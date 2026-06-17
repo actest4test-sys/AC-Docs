@@ -11,7 +11,7 @@ permalink: /contacts-lists-tags/05-lookup-contacts/
 Use the contacts list endpoint to search for, filter, and retrieve contacts without performing an upsert. This is useful when you need to confirm a contact exists, retrieve their ID, or pull their current field values.
 
 ```
-GET /api/3/contacts
+GET https://{youraccountname}.api-us1.com/api/3/contacts
 ```
 
 Full reference: [List, search and filter contacts](https://developers.activecampaign.com/reference/list-all-contacts)
@@ -22,7 +22,6 @@ Full reference: [List, search and filter contacts](https://developers.activecamp
 
 ```
 GET https://{youraccountname}.api-us1.com/api/3/contacts?email=jane@example.com
-Api-Token: {yourapikey}
 ```
 
 Returns a `contacts` array. If the contact exists, `contacts[0]` is your record. If not, `meta.total` is `0`.
@@ -53,7 +52,6 @@ If you already have the contact's numeric ID:
 
 ```
 GET https://{youraccountname}.api-us1.com/api/3/contacts/242
-Api-Token: {yourapikey}
 ```
 
 Returns the full contact object plus related collections (`contactAutomations`, `contactLists`, `contactTags`, `deals`, etc.).

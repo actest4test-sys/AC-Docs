@@ -12,7 +12,7 @@ permalink: /contacts-lists-tags/01-sync-contact/bulk-import/
 For batch backfills, historical-data loads, or any sync where you have **more than a handful of contacts**, use the bulk import endpoint instead of looping `POST /contact/sync`. It's asynchronous, accepts up to 250 contacts per request, and avoids per-contact rate limits.
 
 ```
-POST /api/3/import/bulk_import
+POST https://{youraccountname}.api-us1.com/api/3/import/bulk_import
 ```
 
 ---
@@ -112,7 +112,7 @@ When the payload is malformed or contacts are missing required fields:
 Use the bulk import status endpoint to check whether a queued batch has finished and see which contacts succeeded or failed.
 
 ```
-GET /api/3/import/info?batchId=<batchId>
+GET https://{youraccountname}.api-us1.com/api/3/import/info?batchId=<batchId>
 ```
 
 **Example response (completed):**

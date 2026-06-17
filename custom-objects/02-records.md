@@ -18,7 +18,7 @@ Records are the instances of a schema. Each record sets values for the schema's 
 ## Create a record
 
 ```
-POST /api/3/customObjects/records/{schemaId}
+POST https://{youraccountname}.api-us1.com/api/3/customObjects/records/{schemaId}
 ```
 
 > **Note the path** — the endpoint is `/records/{schemaId}`, not `/records?schemaId=...`. The schema UUID goes in the URL path, not the query string. The plain `/records` endpoint returns `400 Bad Request`.

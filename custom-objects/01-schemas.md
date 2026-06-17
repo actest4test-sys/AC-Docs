@@ -13,7 +13,7 @@ A schema defines the shape of a custom object — its name, its fields, and what
 ## List all schemas
 
 ```
-GET /api/3/customObjects/schemas
+GET https://{youraccountname}.api-us1.com/api/3/customObjects/schemas
 ```
 
 Returns every schema in the account: slug, ID, singular/plural labels, fields, relationships.
@@ -83,7 +83,7 @@ You can find the call to get a single schema (GET `/api/3/customObjects/schemas/
 Schemas are normally set up in the AC UI, but the API does support creation:
 
 ```
-POST /api/3/customObjects/schemas
+POST https://{youraccountname}.api-us1.com/api/3/customObjects/schemas
 ```
 
 The request body below is trimmed — see the full reference [here](https://developers.activecampaign.com/reference/retrieve-a-schema).
