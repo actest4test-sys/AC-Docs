@@ -105,30 +105,7 @@ Fields that allow multiple selections (type `checkbox` or `listbox`) use a pipe-
 }
 ```
 
-The values must match the option text exactly as defined in the field. Use `GET /api/3/fields/{id}/options` to retrieve the valid option values for a field.
-
-## Listing field definitions
-
-```
-GET /api/3/fields
-```
-
-Returns a `fields` array. Each field object includes:
-
-- `id` — numeric ID (the value you pass to `fieldValues`)
-- `perstag` — the merge tag name (e.g. `ACCOUNT`) — useful for lookup, but **cannot** be used as the `field` parameter in `fieldValues`
-- `type` — field type (see table above)
-- `title` — human-readable label
-- `options` — array of option IDs for dropdown/radio/checkbox/listbox fields
-
-To resolve option text values, call `GET /api/3/fields/{id}/options` which returns a `fieldOptions` array with `id`, `value`, and `label` for each option.
-
-## Key behaviors verified live
-
-- **`field` must be the numeric ID.** Passing the `perstag` string (e.g. `"ACCOUNT"`) returns HTTP 422 `"Field id not valid"`. Resolve perstags to numeric IDs via `GET /api/3/fields` before writing values.
-- **`POST` is both create and update.** Re-posting with the same `contact`/`field` pair overwrites the existing value in place — the `fieldValue.id` remains the same, only `udate` changes. There is no conflict error. This means `POST /api/3/fieldValues` handles initial creation and all subsequent updates; you do not need to track whether a value already exists or switch to `PUT` on subsequent calls.
-- **Multi-value fields use `||value1||value2||` pipe-delimited format** (verified live against a `checkbox` field). Each value must match the option text exactly. Sending a plain string to a multi-value field sets that single value with no pipe wrapping required, but the pipe format is needed for multiple selections.
-- **Date fields accept `YYYY-MM-DD`** (verified live). The API stores and returns the value in this format.
+The values must match the option text exactly as defined in the field — use [`GET /api/3/fields/{id}/options`](https://developers.activecampaign.com/reference/retrieve-fields) to retrieve the valid option values for a field.
 
 ## Pitfalls
 
