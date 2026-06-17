@@ -24,5 +24,19 @@ Authentication and base URL follow the same pattern as [Ecommerce](../ecommerce/
 2. **[Step 2 — Subscribe to a list](./02-subscribe-list)** — add a contact to a list with the right status.
 3. **[Step 3 — Apply tags](./03-apply-tags)** — tag for segmentation and automation triggers.
 4. **[Step 4 — Set custom field values](./04-custom-fields)** — write to custom contact fields.
+5. **[Step 5 — Look up existing contacts](./05-lookup-contacts)** — search, filter, and retrieve contacts by email or other criteria.
 
 > **Scaffolded section** — endpoint paths are set, body and key-field detail is TBD. Fill in as you write.
+
+---
+
+## Reference links
+
+- [API overview](https://developers.activecampaign.com/reference/overview)
+- [Authentication](https://developers.activecampaign.com/reference/authentication)
+- [Sync a contact (developer docs)](https://developers.activecampaign.com/reference/sync-a-contacts-data)
+- [List, search and filter contacts (developer docs)](https://developers.activecampaign.com/reference/list-all-contacts)
+- [Retrieve fields (developer docs)](https://developers.activecampaign.com/reference/retrieve-fields)
+- [Contact lists — subscribe/unsubscribe (developer docs)](https://developers.activecampaign.com/reference/update-list-status-for-contact)
+- [Tags (developer docs)](https://developers.activecampaign.com/reference/create-a-new-tag)
+- [Field values (developer docs)](https://developers.activecampaign.com/reference/create-fieldvalue)

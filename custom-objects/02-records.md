@@ -43,6 +43,16 @@ POST /api/3/customObjects/records/{schemaId}
 - **`fields`** — array of `{id, value}` objects. The `id` must match a `field.id` from the schema (Step 1).
 - **`relationships`** — an object keyed by relationship ID (`primary-contact` is the common case). The value is an array of related contact IDs as strings (e.g. `["242"]`).
 
+### Updating a record
+
+Custom object records are updated by re-POSTing to the same schema endpoint with the same `externalId`. The API performs an upsert: if a record with that `externalId` already exists, it is updated; otherwise a new record is created.
+
+> **Send all fields on every update.** The upsert replaces the record's field values with exactly what you send. Any field you omit will be **cleared** — its value will be removed from the record. Always include the full set of field values in every POST, not just the fields that changed.
+>
+> Verified against the live API: a record created with four fields (`amount`, `donation-date`, `campaign-name`, `payment-method`) was re-POSTed with only two of those fields; a subsequent GET showed only those two fields present — the other two were cleared.
+
+The `PUT /api/3/customObjects/records/{schemaId}/{recordId}` path returns `405 Method Not Allowed` — the correct update path is `POST /api/3/customObjects/records/{schemaId}` with the `externalId` in the body.
+
 ### Response
 
 `HTTP 201 Created`. The body echoes the record back:

@@ -9,6 +9,8 @@ permalink: /contacts-lists-tags/01-sync-contact/
 
 # Step 1 — Sync a contact
 
+> **Tip — get your custom field IDs first.** If you plan to set custom field values during sync (via `fieldValues`), call the [Retrieve Fields endpoint](https://developers.activecampaign.com/reference/retrieve-fields) first to get the numeric IDs for each custom field. You can store those IDs on your side to avoid repeating the lookup, or simply run the call at the start of each sync and reference the IDs as needed.
+
 Create-or-update a contact by email in a single call. **This is the endpoint you almost always want** when an integration receives data from an external system — it's idempotent and safe to re-run.
 
 ```
@@ -19,15 +21,19 @@ POST /api/3/contact/sync
 
 The minimum payload is just an email — every other field is optional and only updated if you send it.
 
-```json
-{
-  "contact": {
-    "email": "jane@example.com",
-    "firstName": "Jane",
-    "lastName": "Doe",
-    "phone": "+353 87 123 4567"
-  }
-}
+```bash
+curl -X POST \
+  -H "Api-Token: {yourapikey}" \
+  -H "Content-Type: application/json" \
+  "https://{youraccountname}.api-us1.com/api/3/contact/sync" \
+  -d '{
+    "contact": {
+      "email": "jane@example.com",
+      "firstName": "Jane",
+      "lastName": "Doe",
+      "phone": "+353 87 123 4567"
+    }
+  }'
 ```
 
 ### Top-level `contact` fields
@@ -35,8 +41,8 @@ The minimum payload is just an email — every other field is optional and only 
 | Field | Required | Notes |
 |---|---|---|
 | `email` | **yes** | Used as the dedupe key. Missing email returns `400`; invalid email returns `422`. |
-| `firstName` | no | |
-| `lastName` | no | |
+| `firstName` | no | Contact's first (given) name. |
+| `lastName` | no | Contact's last (family) name. |
 | `phone` | no | Free-form; AC does not validate format. |
 | `fieldValues` | no | Array of `{field, value}` to set custom field values — see below. |
 
@@ -56,22 +62,16 @@ The minimum payload is just an email — every other field is optional and only 
     "phone": "",
     "cdate": "2022-11-02T07:03:03-05:00",
     "udate": "2026-05-21T10:26:06-05:00",
-    "bounced_hard": "0",
-    "bounced_soft": "0",
-    "sentcnt": "658",
-    "last_open_date": "2023-02-02 01:12:22",
-    "last_click_date": "2023-02-02 01:12:22",
-    "orgid": "3",
-    "orgname": "Dublin Museum",
-    "deleted": "0",
-    "links": { /* 18 related-resource URLs */ }
+    "links": { "...": "18 related-resource URLs" }
   }
 }
 ```
 
-**Always capture `contact.id`** — you'll need it for list subscriptions ([Step 2](../02-subscribe-list)), tag application ([Step 3](../03-apply-tags)), custom field writes ([Step 4](../04-custom-fields)), custom object relationships ([Custom Objects](../../custom-objects/02-records/)), and ecommerce customer linkage ([Ecommerce](../../ecommerce/02-customer/)).
+For the full response shape, see the [official API reference](https://developers.activecampaign.com/reference/sync-a-contacts-data).
 
-The `links` object contains URLs to related resources (`contactAutomations`, `contactLists`, `contactTags`, `fieldValues`, `deals`, etc.) — handy for follow-up calls without constructing URLs yourself.
+**Always capture `contact.id`** — you'll need it for list subscriptions ([Step 2](../02-subscribe-list)), tag application ([Step 3](../03-apply-tags)), custom field writes ([Step 4](../04-custom-fields)), custom object relationships ([Custom Objects](../../custom-objects/02-records/)), and ecommerce customer linkage ([Ecommerce](../../ecommerce/02-customer/)). You can also obtain a contact's ID at any time by using the [List, search and filter contacts](../05-lookup-contacts) endpoint if you don't have it on hand.
+
+> **Tip** — The `links` object contains URLs to related resources (`contactAutomations`, `contactLists`, `contactTags`, `fieldValues`, `deals`, etc.) — handy for follow-up calls without constructing URLs yourself.
 
 ## Setting custom field values during sync
 
@@ -118,15 +118,13 @@ See [Step 4](../04-custom-fields) for the standalone `POST /fieldValues` pattern
 }
 ```
 
-The two shapes differ: `400` errors are flat (`{status, title, detail}`), `422` errors are validation-style (`{title, code, error, source}`). Handle both.
+## `POST /contact/sync` vs `PUT /contacts/{id}`
 
-## `POST /contact/sync` vs `POST /contacts`
-
-| | `/contact/sync` | `/contacts` |
+| | `/contact/sync` | `/contacts/{id}` |
 |---|---|---|
-| Behavior | Upsert by email | Create only |
-| Existing email | Returns the existing contact (updates if data provided) | `HTTP 422` with `code: "duplicate"` |
-| Use when | Integrating from any external system | You specifically need create-only semantics and your own duplicate handling |
+| Behavior | Upsert by email | Update by contact ID |
+| Existing email | Returns the existing contact (updates if data provided) | `HTTP 422` with `code: "duplicate"` if you try to change email to one that already exists |
+| Use when | Integrating from any external system | You specifically need update-only semantics and already have the contact ID |
 
 Sample duplicate error from `POST /contacts`:
 
@@ -144,7 +142,7 @@ In almost every integration scenario, prefer `/contact/sync`.
 
 > **For high-volume / historical loads, use the bulk import endpoint instead.**
 >
-> `/contact/sync` is fine for real-time, one-at-a-time integration. For batch backfills or large imports, see [Bulk import](./bulk-import) — it accepts up to 250 contacts per request and is asynchronous.
+> `/contact/sync` is fine for real-time, one-at-a-time integration. For batch backfills, large imports or updates affecting more than 10 contacts at once, see [Bulk import](./bulk-import) — it accepts up to 250 contacts per request and is asynchronous.
 
 ## Looking up an existing contact
 
