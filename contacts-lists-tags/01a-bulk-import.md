@@ -59,25 +59,6 @@ POST /api/3/import/bulk_import
 }
 ```
 
-### Per-contact fields
-
-| Field | Required | Notes |
-|---|---|---|
-| `email` | **yes** | Dedupe key. Missing email rejects that contact in `failureReasons`. |
-| `first_name`, `last_name`, `phone` | no | **snake_case** here — the most common gotcha when switching from `/contact/sync`. |
-| `tags` | no | Array of tag **names** (strings). Tags are auto-created if they don't exist. |
-| `subscribe` | no | Array of `{listid: N}`. Subscribes the contact to those lists. |
-| `unsubscribe` | no | Array of `{listid: N}`. Unsubscribes from those lists. |
-| `fields` | no | Array of `{id, value}` for custom field values. `id` is numeric (from `GET /api/3/fields`), not `perstag`. |
-| `customer_acct_name` | no | Associates the contact with a B2B account by name. |
-
-### Top-level options
-
-| Field | Notes |
-|---|---|
-| `callback` | Optional URL AC posts to when the batch finishes processing. Includes `requestType` (`POST`/`GET`), and optional `params`/`headers` arrays. |
-| `exclude_automations` | `true` to suppress any automations triggered by list subscribes / tag applies in this batch. Useful for historical loads. |
-
 ---
 
 ## Response
@@ -111,31 +92,55 @@ When the payload is malformed or contacts are missing required fields:
 
 **Key point:** if **any** contact in the batch fails validation, the **entire batch is rejected** — none are queued. Either scrub the payload before sending, or accept the rejection and retry with the valid subset.
 
-`failureReasons` is either:
-- A **string array** for top-level JSON errors (e.g. `["Invalid or unparsable json"]`)
-- An **object array** for per-contact validation errors (`[{contact: <index>, failureReason: "..."}]`, 1-indexed)
+`failureReasons` takes one of two forms depending on the error type:
+- A **string array** for top-level/general errors (e.g. `["Rate limit exceeded."]`)
+- An **object array** for per-contact validation errors (`[{"contact": <index>, "failureReason": "..."}]`, 1-indexed)
 
 ---
 
 ## Limits
 
 - **250 contacts** per request — chunk larger imports into pages of 250.
+- **400 KB** maximum payload size per request (399,999 bytes or less).
 - **Rate limit: 100 requests per minute** for multi-contact batches; **20 requests per minute** for single-contact batches (separate quota from the main REST API). At 100 req/min with 250 contacts per request, theoretical max ≈ 25,000 contacts/minute. Build in delay if you hit rate limits.
-- Asynchronous processing — the `batchId` is your only handle on the batch. Don't fire-and-forget if you need confirmation of completion; use the `callback` URL or poll a known contact to verify arrival.
+- Asynchronous processing — the `batchId` is your only handle on the batch. Use the status endpoint or the `callback` URL to verify completion.
 
 ---
 
-## Verifying a batch landed
+## Checking batch status
 
-There's no public "batch status" endpoint as of writing. Verification options:
+Use the bulk import status endpoint to check whether a queued batch has finished and see which contacts succeeded or failed.
 
-1. **Use a callback** — AC posts to your URL when the batch is processed. Most reliable for production pipelines.
-2. **Poll for a known contact** — wait ~10s, then `GET /api/3/contacts?email=<sample-email-from-batch>`. If it's present, the batch processed.
-3. **Spot-check totals** — for migrations, compare `GET /contacts?limit=0` `meta.total` before and after.
+```
+GET /api/3/import/info?batchId=<batchId>
+```
 
-> **⚠ Don't immediately re-query after `success: 1`**
->
-> The batch is queued, not done. Allow at least 5–10 seconds before verifying. Premature verification leads to thinking the import failed and double-importing.
+**Example response (completed):**
+
+```json
+{
+  "status": "completed",
+  "success": ["1250", "1251", "1252"],
+  "failure": []
+}
+```
+
+- `success` — array of AC contact IDs (as strings) for contacts that were created or updated.
+- `failure` — array of email addresses that failed to import (e.g. invalid format, on exclusion list, bounced).
+- `status` can be: `waiting`, `claimed`, `active`, `completed`, `failed`, or `interrupted`.
+
+> **Note:** If you call this endpoint less than a second after submitting the import, `status` may return `false` (a boolean) because the system has not yet assigned a status to the batch. Wait at least a few seconds before polling.
+
+**Example response (bad/missing batchId — `HTTP 400`):**
+
+```json
+{
+  "success": 0,
+  "message": "'batchId' is a required field."
+}
+```
+
+See the [official reference](https://developers.activecampaign.com/reference/bulk-import-status-info) for full detail.
 
 ---
 
@@ -147,12 +152,14 @@ There's no public "batch status" endpoint as of writing. Verification options:
 - **`fields[].id` is numeric.** Same gotcha as `/contact/sync` and `POST /fieldValues` — `perstag` doesn't work here.
 - **No idempotency by external ID.** Unlike ecommerce records, bulk_import has no `externalid` field. Dedup is by email only — re-importing the same email updates the existing contact.
 - **Automations fire by default.** If you're loading historical data, set `exclude_automations: true` so contacts don't get re-enrolled in welcome/onboarding flows.
+- **Don't immediately re-query after `success: 1`.** The batch is queued, not done. Allow at least 5–10 seconds before checking status. Premature verification leads to thinking the import failed and double-importing.
 
 ---
 
 ## Reference
 
 - [Bulk Import (AC developer docs)](https://developers.activecampaign.com/reference/bulk-import-contacts)
+- [Bulk Import Status Info (AC developer docs)](https://developers.activecampaign.com/reference/bulk-import-status-info)
 
 ---
 
