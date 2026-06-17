@@ -40,34 +40,30 @@ POST /api/3/customObjects/records/{schemaId}
 ### Key fields
 
 - **`externalId`** — optional but recommended. Your system's unique ID for the record. Use it for idempotent re-syncs.
-- **`fields`** — array of `{id, value}` objects. The `id` must match a `field.id` from the schema (Step 1). Unknown field IDs are silently dropped.
-- **`relationships`** — an object keyed by relationship ID (`primary-contact` is the common case). The value is **an array of related IDs as strings** — even when the relationship is `hasMany: false`, the value is a single-element array.
-
-### Field value types
-
-| Schema `field.type` | Body value |
-|---|---|
-| `text` | string (numeric values like ratings/amounts also go in as strings, e.g. `"50"`) |
-| `datetime` | ISO 8601 with `Z` or offset (e.g. `2026-05-21T00:00:00Z`) |
+- **`fields`** — array of `{id, value}` objects. The `id` must match a `field.id` from the schema (Step 1).
+- **`relationships`** — an object keyed by relationship ID (`primary-contact` is the common case). The value is an array of related contact IDs as strings (e.g. `["242"]`).
 
 ### Response
 
-`HTTP 201 Created`. The body echoes the record back — but **note the `id` field is not included**:
+`HTTP 201 Created`. The body echoes the record back:
 
 ```json
 {
   "record": {
     "externalId": "donation-12345",
     "schemaId": "4453571f-4a21-45e9-9872-49ce0f86e611",
-    "fields": [ ... ],
+    "fields": [
+      {"id": "amount", "value": "50"},
+      {"id": "donation-date", "value": "2026-05-21T00:00:00Z"},
+      {"id": "campaign-name", "value": "Spring Appeal"},
+      {"id": "payment-method", "value": "Credit Card"}
+    ],
     "relationships": { "primary-contact": ["242"] }
   }
 }
 ```
 
-> **⚠ POST does not return the new record's `id`**
->
-> To get the AC-assigned UUID for a record you just created, either list the records ([Step 3](../03-querying)) and match on your `externalId`, or `GET` the single record by ID once you know it from a subsequent list. Track your own `externalId` carefully — it's the only handle you have on the record immediately after creation.
+> **Note:** the `201` response does not include the AC-assigned record `id`. To retrieve it, list the records ([Step 3](../03-querying)) and match on your `externalId`.
 
 ## Linking to a contact
 
