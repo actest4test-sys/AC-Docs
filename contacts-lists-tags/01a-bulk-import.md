@@ -90,7 +90,7 @@ When the payload is malformed or contacts are missing required fields:
 }
 ```
 
-**Key point:** if **any** contact in the batch fails validation, the **entire batch is rejected** — none are queued. Either scrub the payload before sending, or accept the rejection and retry with the valid subset.
+> **⚠ All-or-nothing validation:** if **any** contact in the batch fails validation, the **entire batch is rejected** — none are queued. Either scrub the payload before sending, or accept the rejection and retry with the valid subset.
 
 `failureReasons` takes one of two forms depending on the error type:
 - A **string array** for top-level/general errors (e.g. `["Rate limit exceeded."]`)
@@ -147,7 +147,7 @@ See the [official reference](https://developers.activecampaign.com/reference/bul
 ## Pitfalls
 
 - **camelCase vs snake_case.** `/contact/sync` uses `firstName`; `/import/bulk_import` uses `first_name`. Mixing them silently drops the values (no validation error — the field is just unknown).
-- **One bad contact rejects the entire batch.** Pre-validate emails client-side before sending.
+- **One bad contact rejects the entire batch.** Pre-validate emails client-side before sending. (See the callout in [Validation error](#validation-error--http-400) above.)
 - **Tag names auto-create tags.** A typo in `"Premium"` vs `"premuim"` creates a new permanent tag in the account. Hard to clean up later — normalize tag names before sending.
 - **`fields[].id` is numeric.** Same gotcha as `/contact/sync` and `POST /fieldValues` — `perstag` doesn't work here.
 - **No idempotency by external ID.** Unlike ecommerce records, bulk_import has no `externalid` field. Dedup is by email only — re-importing the same email updates the existing contact.
