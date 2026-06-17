@@ -15,21 +15,19 @@ Two-step pattern: ensure the tag exists (create it if needed), then link it to t
 If the tag already exists, skip to [Step 3b](#step-3b--apply-tag-to-contact) and use its numeric `id`. If you need to create it first:
 
 ```
-POST /api/3/tags
+POST https://{youraccountname}.api-us1.com/api/3/tags
+Api-Token: {yourapikey}
+Content-Type: application/json
 ```
 
-```bash
-curl -X POST \
-  -H "Api-Token: {yourapikey}" \
-  -H "Content-Type: application/json" \
-  "https://{youraccountname}.api-us1.com/api/3/tags" \
-  -d '{
-    "tag": {
-      "tag": "Customer",
-      "tagType": "contact",
-      "description": "Paying customer"
-    }
-  }'
+```json
+{
+  "tag": {
+    "tag": "Customer",
+    "tagType": "contact",
+    "description": "Paying customer"
+  }
+}
 ```
 
 ### `tag` fields
@@ -62,27 +60,25 @@ HTTP `201` on creation. The response wraps the new tag under a `tag` key:
 
 Capture `tag.id` — you need this numeric value in Step 3b.
 
-To look up an existing tag by name, use `GET /api/3/tags?search=Customer` and read `tags[0].id` from the response.
+To search for an existing tag by name, use `GET /api/3/tags?search={name}` — the `search` query parameter performs a substring match on the tag name. See the [official API reference for listing and searching tags](https://developers.activecampaign.com/reference/retrieve-all-tags) for the full parameter list. Read `tags[0].id` from the response.
 
 ---
 
 ## Step 3b — Apply tag to contact
 
 ```
-POST /api/3/contactTags
+POST https://{youraccountname}.api-us1.com/api/3/contactTags
+Api-Token: {yourapikey}
+Content-Type: application/json
 ```
 
-```bash
-curl -X POST \
-  -H "Api-Token: {yourapikey}" \
-  -H "Content-Type: application/json" \
-  "https://{youraccountname}.api-us1.com/api/3/contactTags" \
-  -d '{
-    "contactTag": {
-      "contact": "1182",
-      "tag": "471"
-    }
-  }'
+```json
+{
+  "contactTag": {
+    "contact": "1182",
+    "tag": "471"
+  }
+}
 ```
 
 ### `contactTag` fields
@@ -129,7 +125,7 @@ Trimmed example:
 
 For the full response schema see the [official API reference](https://developers.activecampaign.com/reference/create-contact-tag).
 
-> **`contactTag.id`** is the ID of the contact-tag link record, not the contact or tag. Use this ID to delete the link later via `DELETE /api/3/contactTags/{id}`.
+> **`contactTag.id`** is the ID of the contact-tag link record, not the contact or tag. Use this ID to remove the tag from the contact later via `DELETE /api/3/contactTags/{id}` — this only removes the link between the contact and the tag; it does not delete the tag itself from your account.
 
 ## Key behaviors verified live
 
@@ -140,7 +136,7 @@ For the full response schema see the [official API reference](https://developers
 ## Pitfalls
 
 - **Using the tag name instead of the numeric ID.** The `contactTags` endpoint requires `tag` to be the numeric ID string. Resolve tag names via `GET /api/3/tags?search={name}` before applying.
-- **Creating duplicate tags.** `POST /api/3/tags` will create a new tag even if one with the same name already exists. Always check for an existing tag first (via `GET /api/3/tags?search={name}`) and reuse its ID rather than creating a second tag with the same name.
+- **Duplicate tag names are not created.** `POST /api/3/tags` with a name that already exists returns HTTP `200` and the existing tag — it does not create a second tag. Always check for an existing tag first (via `GET /api/3/tags?search={name}`) and reuse its ID.
 
 ---
 

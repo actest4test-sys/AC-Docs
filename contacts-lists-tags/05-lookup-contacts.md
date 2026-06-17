@@ -20,9 +20,9 @@ Full reference: [List, search and filter contacts](https://developers.activecamp
 
 ## Look up by email (exact match)
 
-```bash
-curl -H "Api-Token: {yourapikey}" \
-  "https://{youraccountname}.api-us1.com/api/3/contacts?email=jane@example.com"
+```
+GET https://{youraccountname}.api-us1.com/api/3/contacts?email=jane@example.com
+Api-Token: {yourapikey}
 ```
 
 Returns a `contacts` array. If the contact exists, `contacts[0]` is your record. If not, `meta.total` is `0`.
@@ -61,9 +61,9 @@ Useful for finding all contacts at a given domain, for example.
 
 If you already have the contact's numeric ID:
 
-```bash
-curl -H "Api-Token: {yourapikey}" \
-  "https://{youraccountname}.api-us1.com/api/3/contacts/242"
+```
+GET https://{youraccountname}.api-us1.com/api/3/contacts/242
+Api-Token: {yourapikey}
 ```
 
 Returns the full contact object plus related collections (`contactAutomations`, `contactLists`, `contactTags`, `deals`, etc.).

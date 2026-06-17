@@ -10,24 +10,22 @@ permalink: /contacts-lists-tags/04-custom-fields/
 
 Custom fields are defined at the account level. Write values for a specific contact via the `fieldValues` endpoint, referencing the field's numeric ID (not its `perstag` name) and the contact's numeric ID.
 
+## Request
+
 ```
-POST /api/3/fieldValues
+POST https://{youraccountname}.api-us1.com/api/3/fieldValues
+Api-Token: {yourapikey}
+Content-Type: application/json
 ```
 
-## Request body
-
-```bash
-curl -X POST \
-  -H "Api-Token: {yourapikey}" \
-  -H "Content-Type: application/json" \
-  "https://{youraccountname}.api-us1.com/api/3/fieldValues" \
-  -d '{
-    "fieldValue": {
-      "contact": "1182",
-      "field": "9",
-      "value": "Acme Corp"
-    }
-  }'
+```json
+{
+  "fieldValue": {
+    "contact": "1182",
+    "field": "9",
+    "value": "Acme Corp"
+  }
+}
 ```
 
 ### `fieldValue` fields
