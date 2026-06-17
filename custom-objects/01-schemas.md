@@ -86,6 +86,8 @@ Schemas are normally set up in the AC UI, but the API does support creation:
 POST /api/3/customObjects/schemas
 ```
 
+The request body below is trimmed — see the full reference [here](https://developers.activecampaign.com/reference/retrieve-a-schema).
+
 ```json
 {
   "schema": {
