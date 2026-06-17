@@ -86,6 +86,11 @@ nav,
 }
 .search-input {
   border: 1px solid rgba(95, 168, 255, 0.18);
+  border-radius: 10px !important;
+}
+// Round the outer wrapper to match; theme sets it to 0 at wider viewports.
+.search-input-wrap {
+  border-radius: 10px !important;
 }
 
 // ───────── Code blocks ─────────

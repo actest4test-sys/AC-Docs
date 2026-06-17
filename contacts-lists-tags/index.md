@@ -3,6 +3,7 @@ title: "Contacts, Lists & Tags"
 layout: default
 nav_order: 4
 has_children: true
+has_toc: false
 permalink: /contacts-lists-tags/
 ---
 
@@ -20,7 +21,7 @@ Authentication and base URL follow the same pattern as [Ecommerce](../ecommerce/
 
 ## The flow at a glance
 
-1. **[Step 1 — Sync a contact](./01-sync-contact)** — create-or-update by email.
+1. **Step 1 — [Sync contacts individually](./01-sync-contact) or [Import in Bulk](./01-sync-contact/bulk-import)**
 2. **[Step 2 — Subscribe to a list](./02-subscribe-list)** — add a contact to a list with the right status.
 3. **[Step 3 — Apply tags](./03-apply-tags)** — tag for segmentation and automation triggers.
 4. **[Step 4 — Set custom field values](./04-custom-fields)** — write to custom contact fields.
@@ -40,3 +41,15 @@ Authentication and base URL follow the same pattern as [Ecommerce](../ecommerce/
 - [Contact lists — subscribe/unsubscribe (developer docs)](https://developers.activecampaign.com/reference/update-list-status-for-contact)
 - [Tags (developer docs)](https://developers.activecampaign.com/reference/create-a-new-tag)
 - [Field values (developer docs)](https://developers.activecampaign.com/reference/create-fieldvalue)
+
+---
+
+## Table of contents
+{: .text-delta }
+
+- [Step 1 — Sync a contact](./01-sync-contact)
+  - [Bulk import](./01-sync-contact/bulk-import)
+- [Step 2 — Subscribe to a list](./02-subscribe-list)
+- [Step 3 — Apply tags](./03-apply-tags)
+- [Step 4 — Set custom field values](./04-custom-fields)
+- [Step 5 — Look up existing contacts](./05-lookup-contacts)
