@@ -234,3 +234,59 @@ code:not([class*="language-"]) {
     height: 24px;
   }
 }
+
+// ───────── Ambient-mode screenshot glow ─────────
+// Mimics YouTube ambient mode: a blurred, scaled-up copy of the same image
+// bleeds colour out from the edges, softening the hard rectangle against the
+// page background. The image itself stays crisp; only the halo is blurred.
+//
+// Implementation: the figure uses position:relative so the ::before pseudo-
+// element (which carries the blurred background-image) can be absolutely
+// positioned behind the real <img> via z-index. padding on the figure gives
+// the glow room to show around the image.
+//
+// Works in both light and dark mode — the glow colour comes from the image
+// itself, so it always harmonises with the screenshot content.
+.ambient-shot {
+  position: relative;
+  display: block;
+  margin: 1.75rem 0;
+  padding: 2rem;
+  border-radius: 12px;
+  overflow: visible;
+
+  /* The glow layer — same image, blurred and scaled up slightly */
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: var(--ambient-img);
+    background-size: 110% 110%;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: blur(40px) saturate(1.4);
+    opacity: 0.55;
+    border-radius: 12px;
+    z-index: 0;
+    transform: scale(1.05);
+  }
+
+  img {
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+  }
+
+  figcaption {
+    position: relative;
+    z-index: 1;
+    margin-top: 0.6rem;
+    font-size: 0.82rem;
+    color: rgba(255, 255, 255, 0.55);
+    text-align: center;
+    font-style: italic;
+  }
+}
