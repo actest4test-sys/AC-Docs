@@ -93,7 +93,7 @@ Custom contact fields can be set in the same call by including a `fieldValues` a
 
 - **`field`** is the **numeric ID** from `GET /api/3/fields`, **not** the `perstag`.
 - **`value`** is always a string (even for numeric/date fields).
-- When `fieldValues` is in the request, the response includes both a `fields` key and a `fieldValues` array listing **all** field values on the contact (not just the ones you set).
+- When `fieldValues` is in the request, the response includes a `fieldValues` array listing **only the field values you set** in that call (not all field values on the contact).
 
 See [Step 4](../04-custom-fields) for the standalone `POST /fieldValues` pattern (useful when you only need to update one custom field after the contact already exists).
 
@@ -144,33 +144,11 @@ In almost every integration scenario, prefer `/contact/sync`.
 >
 > `/contact/sync` is fine for real-time, one-at-a-time integration. For batch backfills, large imports or updates affecting more than 10 contacts at once, see [Bulk import](./bulk-import) — it accepts up to 250 contacts per request and is asynchronous.
 
-## Looking up an existing contact
-
-If you already have the contact ID, use:
-
-```
-GET /api/3/contacts/{id}
-```
-
-Returns the contact plus related collections (automations, lists, deals, etc.) — a heavy response, fine for one-off lookups.
-
-To find a contact by email without doing an upsert:
-
-```
-GET /api/3/contacts?email=jane@example.com
-```
-
-Returns `{contacts: [...], scoreValues: [...], meta: {total, ...}}`. The `scoreValues` key sitting next to `contacts` is normal — it's not the response body, it's a sibling collection. Read `contacts[0]` (or `meta.total === 0` for "not found").
-
-`email_like=` accepts a substring instead of an exact match.
-
 ## Pitfalls
 
 - **Sending `field` as a `perstag` instead of the numeric ID.** Use `GET /api/3/fields` first to resolve. Wrong `field` values are silently ignored.
 - **Assuming `sync` clears unspecified fields.** It doesn't — re-sync only touches keys you send.
 - **Using `POST /contacts` for integrations.** It throws 422 on every re-sync of an existing email. Use `/contact/sync`.
-- **Reading the response as `{contacts: [...]}` after a single-contact lookup.** `GET /contacts/{id}` returns `{contact: {...}}` (singular). `GET /contacts?email=...` returns `{contacts: [...]}` (plural).
-- **Ignoring `bounced_hard`.** A contact with `bounced_hard: "1"` won't receive email. Worth surfacing in your sync logic.
 
 ---
 

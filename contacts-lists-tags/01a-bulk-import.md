@@ -24,7 +24,7 @@ POST /api/3/import/bulk_import
 | Mode | Synchronous | **Asynchronous** (queued) |
 | Per-call payload | 1 contact | Up to **250 contacts** |
 | Response time | Returns the contact | Returns immediately with a `batchId` |
-| Rate limit | 5 req/sec (standard API) | 5 req/min (separate import quota) |
+| Rate limit | 5 req/sec (standard API) | 100 req/min multi-contact; 20 req/min single-contact (separate import quota) |
 | Field naming | **camelCase** (`firstName`) | **snake_case** (`first_name`) |
 | Use for | Real-time integration | Migrations, nightly syncs, CSV imports |
 
@@ -120,7 +120,7 @@ When the payload is malformed or contacts are missing required fields:
 ## Limits
 
 - **250 contacts** per request — chunk larger imports into pages of 250.
-- **5 requests per minute** (separate quota from the main REST API). Theoretical max ≈ 1,250 contacts/minute. Build in delay if you need to push more.
+- **Rate limit: 100 requests per minute** for multi-contact batches; **20 requests per minute** for single-contact batches (separate quota from the main REST API). At 100 req/min with 250 contacts per request, theoretical max ≈ 25,000 contacts/minute. Build in delay if you hit rate limits.
 - Asynchronous processing — the `batchId` is your only handle on the batch. Don't fire-and-forget if you need confirmation of completion; use the `callback` URL or poll a known contact to verify arrival.
 
 ---
