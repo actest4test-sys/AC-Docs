@@ -78,20 +78,6 @@ Check the full example response [here](https://developers.activecampaign.com/ref
 
 You can find the call to get a single schema (GET `/api/3/customObjects/schemas/{id}`) [here](https://developers.activecampaign.com/reference/retrieve-a-schema).
 
-## Looking up by slug or label
-
-The list endpoint is paginated (default page size: 20). The pragmatic pattern is to fetch until you find the schema you need, or match locally after fetching all pages:
-
-```python
-schemas = client.get("/customObjects/schemas")["schemas"]
-donation = next(s for s in schemas if s["labels"]["singular"] == "Donation")
-schema_id = donation["id"]
-```
-
-> **Schema ID vs slug**
->
-> Most record-level endpoints take the schema **UUID**, not the slug. Look up the UUID once and cache it for the session.
-
 ## Creating a schema via API
 
 Schemas are normally set up in the AC UI, but the API does support creation:
