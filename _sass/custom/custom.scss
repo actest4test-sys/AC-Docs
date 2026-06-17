@@ -256,7 +256,7 @@ code:not([class*="language-"]) {
   position: relative;
   display: block;
   margin: 1.75rem 0;
-  padding: 2rem;
+  padding: 1.25rem;
   border-radius: 12px;
   overflow: visible;
 
@@ -269,11 +269,11 @@ code:not([class*="language-"]) {
     background-size: 110% 110%;
     background-position: center;
     background-repeat: no-repeat;
-    filter: blur(40px) saturate(1.4);
-    opacity: 0.55;
+    filter: blur(28px) saturate(1.2);
+    opacity: 0.32;
     border-radius: 12px;
     z-index: 0;
-    transform: scale(1.05);
+    transform: scale(0.99);
   }
 
   img {
