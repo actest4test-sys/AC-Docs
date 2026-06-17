@@ -11,10 +11,10 @@ permalink: /custom-objects/03-querying/
 ## List all records for a schema
 
 ```
-GET /api/3/customObjects/records/{schemaId}?limit=100
+GET https://{youraccountname}.api-us1.com/api/3/customObjects/records/{schemaId}
 ```
 
-Returns paginated records for the schema. **The schema ID goes in the URL path** — other URL shapes (`/customObjects/records?schemaId=...`, `/customObjects/{schemaId}/records`) return `400 Bad Request`. Default ordering is **not guaranteed** — use `orders[createdTimestamp]` (below) for explicit sorting.
+Returns paginated records for the schema. Default ordering is **not guaranteed** — use `orders[createdTimestamp]` (below) for explicit sorting.
 
 ### Response shape
 
@@ -22,52 +22,26 @@ Returns paginated records for the schema. **The schema ID goes in the URL path**
 {
   "records": [
     {
-      "id": "c7d03114-338e-439b-9380-91122fa25ddd",
-      "externalId": "donation-12345",
+      "id": "27783bc8-beff-42dc-a1c8-cbb8e1c84ccb",
+      "externalId": "np-donation-3f7269d8",
       "schemaId": "4453571f-4a21-45e9-9872-49ce0f86e611",
       "fields": [
-        {"id": "amount", "value": "50"},
-        {"id": "donation-date", "value": "2026-05-21T00:00:00Z"}
+        {"id": "donation-date", "value": "2026-04-15T00:00:00Z"},
+        {"id": "amount", "value": "250"},
+        {"id": "campaign-name", "value": "Spring Appeal 2026"},
+        {"id": "is-recurring", "value": "Yes"},
+        {"id": "payment-method", "value": "Direct Debit"}
       ],
       "relationships": {
-        "primary-contact": ["242"]
+        "primary-contact": ["892"]
       },
-      "createdTimestamp": "2026-05-21T11:14:25.386Z",
-      "updatedTimestamp": "2026-05-21T11:14:25.386Z"
+      "createdTimestamp": "2026-05-05T13:06:10.520Z",
+      "updatedTimestamp": "2026-05-05T13:06:10.520Z"
     }
   ],
-  "meta": {"total": 10, "count": 10, "limit": 100, "offset": 0}
+  "meta": {"total": 12, "count": 1, "limit": 100, "offset": 0}
 }
 ```
-
-## Filter records for a specific contact
-
-The records-list endpoint does not expose a `relatedId` filter. The pragmatic pattern is to fetch the page and filter in code:
-
-```python
-records = response["records"]
-for_contact = [
-    r for r in records
-    if str(contact_id) in r.get("relationships", {}).get("primary-contact", [])
-]
-```
-
-For schemas with many records, paginate with `limit` + `offset`:
-
-```
-GET /api/3/customObjects/records/{schemaId}?limit=100&offset=100
-```
-
-`meta.total` in the response tells you when you've reached the end.
-
-## Sort by createdTimestamp
-
-```
-GET /api/3/customObjects/records/{schemaId}?orders[createdTimestamp]=ASC
-GET /api/3/customObjects/records/{schemaId}?orders[createdTimestamp]=DESC
-```
-
-Server-side sort by record creation time. The most useful pattern for "give me everything in chronological order" or "give me the newest N records first".
 
 ## Filter by exact createdTimestamp
 
@@ -92,13 +66,19 @@ Returns the full record (including `id`, `createdTimestamp`, `updatedTimestamp`)
 ```json
 {
   "record": {
-    "id": "c7d03114-338e-439b-9380-91122fa25ddd",
-    "externalId": "donation-12345",
+    "id": "27783bc8-beff-42dc-a1c8-cbb8e1c84ccb",
+    "externalId": "np-donation-3f7269d8",
     "schemaId": "4453571f-4a21-45e9-9872-49ce0f86e611",
-    "fields": [ ... ],
-    "relationships": {"primary-contact": ["242"]},
-    "createdTimestamp": "2026-05-21T11:14:25.386Z",
-    "updatedTimestamp": "2026-05-21T11:14:25.386Z"
+    "fields": [
+      {"id": "donation-date", "value": "2026-04-15T00:00:00Z"},
+      {"id": "amount", "value": "250"},
+      {"id": "campaign-name", "value": "Spring Appeal 2026"},
+      {"id": "is-recurring", "value": "Yes"},
+      {"id": "payment-method", "value": "Direct Debit"}
+    ],
+    "relationships": {"primary-contact": ["892"]},
+    "createdTimestamp": "2026-05-05T13:06:10.520Z",
+    "updatedTimestamp": "2026-05-05T13:06:10.520Z"
   }
 }
 ```
